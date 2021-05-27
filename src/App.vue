@@ -1,12 +1,63 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Navbar :inverse="isOnTop" />
+    <main>
+      <Hero class="w-full h-screen" />
+      <Introduction />
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <Services />
+        <References />
+      </div>
+    </main>
+    <Contact />
   </div>
 </template>
+
+<script>
+import Hero from './views/Hero'
+import Introduction from './views/Introduction'
+import Services from './views/Services'
+import References from './views/References'
+import Contact from './views/Contact'
+import Navbar from './components/Navbar'
+
+const throttle = (fn, delay) => {
+  let timeoutID = null
+  return () => {
+    timeoutID = setTimeout(() => {
+      clearTimeout(timeoutID)
+      fn()
+    }, delay)
+  }
+}
+
+export default {
+  components: {
+    Hero,
+    Introduction,
+    Services,
+    References,
+    Contact,
+    Navbar
+  },
+  data () {
+    return {
+      isOnTop: false
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', throttle(this.handleScroll, 100))
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll (ev) {
+      this.isOnTop = (window.scrollY || window.scrollTop) > 80
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -15,15 +66,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

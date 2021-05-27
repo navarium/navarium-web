@@ -1,0 +1,24 @@
+{
+  "menu": {
+    "services": "Servizi",
+    "references": "Riferimenti",
+    "contact": "Contatti"
+  },
+  "lang": {
+    "hu": "Ungherese",
+    "en": "Inglese",
+    "de": "Tedesco",
+    "it": "Italiano"
+  },
+  "section": {
+    "introduction": {
+      "title": "Introduzione"
+    },
+    "services": {
+      "title": "Servizi"
+    },
+    "references": {
+      "title": "Riferimenti"
+    }
+  }
+}
