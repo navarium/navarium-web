@@ -14,19 +14,23 @@
     >
       <mask id="mask">
         <rect x="0" y="0" width="100%" height="100%" fill="white" />
-        <circle ref="mask" cx="18" cy="6" r="8" fill="black" stroke-width="0" class="mask" :style="{ animationDirection: theme === 'dark' ? '' : 'reverse' }" />
+        <transition name="moonMove" enter-active-class="moonrise" leave-active-class="moonset">
+          <circle v-if="theme !== 'dark'" cx="18" cy="6" r="8" fill="black" stroke-width="0" class="mask" />
+        </transition>
       </mask>
       <circle fill="currentColor" cx="12" cy="12" r="5" mask="url(#mask)" />
-      <g ref="sunFlaire" class="sunFlaire" :style="{ animationDirection: theme === 'dark' ? '' : 'reverse' }" stroke="currentColor">
-        <line x1="12" y1="1" x2="12" y2="3" />
-        <line x1="12" y1="21" x2="12" y2="23" />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-        <line x1="1" y1="12" x2="3" y2="12" />
-        <line x1="21" y1="12" x2="23" y2="12" />
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-      </g>
+      <transition name="sunFlaire" enter-active-class="sunrise" leave-active-class="sunset">
+        <g class="sunFlaire" v-if="theme === 'dark'" stroke="currentColor">
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </g>
+      </transition>
     </svg>
   </button>
 </template>
@@ -41,58 +45,52 @@ export default {
   },
   computed: {
     ...mapGetters({ theme: 'getTheme' })
-  },
-  watch: {
-    theme (newVal) {
-      console.log(newVal)
-      console.log('1', this.$refs.mask.classList)
-      this.$refs.mask.classList.remove('active')
-      this.$refs.sunFlaire.classList.remove('active')
-      /* console.log('2', this.$refs.mask.classList)
-      if (newVal === 'dark') {
-        this.$refs.mask.style.animationDirection = 'reverse'
-      } else {
-        this.$refs.mask.style.animationDirection = ''
-      } */
-      // this.$refs.mask.classList.add('active')
-      setTimeout(() => {
-        this.$refs.mask.classList.add('active')
-        this.$refs.sunFlaire.classList.add('active')
-      })
-      console.log('3', this.$refs.mask.classList)
-    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$animationDuration: 2s;
-.sunFlaire {
-  &.active {
-    animation: grow $animationDuration 1;
-    transform-origin: center;
-    animation-fill-mode: forwards;
-  }
+$animationDuration: 0.5s;
+
+.sunrise {
+  animation: sunrise $animationDuration 1;
+  transform-origin: center;
+  animation-fill-mode: forwards;
 }
 
-.mask {
-  transform: translate3d(8px, 0, 0);
-  &.active {
-    animation: moveOut $animationDuration 1;
-    animation-fill-mode: forwards;
-  }
+.sunset {
+  animation: sunrise $animationDuration 1;
+  transform-origin: center;
+  animation-fill-mode: forwards;
+  animation-direction: reverse;
 }
 
-@keyframes moveOut {
+.moonrise {
+  animation: moon $animationDuration 1;
+  animation-fill-mode: forwards;
+}
+
+.moonset {
+  animation: moon $animationDuration 1;
+  animation-direction: reverse;
+}
+
+@keyframes moon {
   0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
     transform: translate3d(8px, 0, 0);
   }
+  40% {
+    transform: translate3d(8px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-@keyframes grow {
+@keyframes sunrise {
+  0% {
+    transform: scale(0.01);
+  }
   50% {
     transform: scale(0.01);
   }

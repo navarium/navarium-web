@@ -7,33 +7,40 @@
     <div v-else>
       <carousel :perPage="1" :perPageCustom="[[768, 2], [1024, 3]]">
         <slide v-for="reference in references" :key="reference.id" >
-          <article class="text-left" @click="openModal(reference)">
-            <img :src="reference.images[0].url" alt="Reference cover photo">
-            <h1>{{ reference[`title_${$i18n.locale}`] }}</h1>
-            <div v-html="renderDescription(reference[`description_${$i18n.locale}`])"></div>
-          </article>
+          <router-link :to="{ name: 'reference', params: { id: reference.id } }">
+            <div class="my-1 px-1 w-full">
+              <article class="overflow-hidden rounded-lg shadow-lg">
+                  <img class="block h-auto w-full" :src="reference.images[0].url" alt="Reference cover photo">
+                  <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                    <h1 class="text-lg">
+                      {{ reference[`title_${$i18n.locale}`] }}
+                    </h1>
+                    <p class="text-grey-darker text-sm">
+                      14/4/19
+                    </p>
+                  </header>
+                  <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+                    <div v-html="renderDescription(reference[`description_${$i18n.locale}`])"></div>
+                  </footer>
+              </article>
+            </div>
+          </router-link>
         </slide>
       </carousel>
     </div>
-    <modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header">{{ modalContent[`title_${$i18n.locale}`] }}</h3>
-    </modal>
   </section>
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
 import marked from 'marked'
 import { Carousel, Slide } from 'vue-carousel'
-import Modal from '../components/Modal'
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
 
 export default {
   name: 'references',
   components: {
     Carousel,
-    Slide,
-    Modal
+    Slide
   },
   data () {
     return {
@@ -48,22 +55,17 @@ export default {
       modalContent: null
     }
   },
-  async mounted () {
+  async created () {
     try {
-      const references = await axios.get(`${apiUrl}/references`)
-      this.references = references.data
+      this.references = await this.initReferences()
     } catch (error) {
       this.error = error
     }
   },
   methods: {
+    ...mapActions(['initReferences']),
     renderDescription (description) {
       return description ? marked(description) : ''
-    },
-    openModal (reference) {
-      console.log(reference)
-      this.showModal = true
-      this.modalContent = reference
     }
   }
 }

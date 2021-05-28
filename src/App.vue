@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar :inverse="isOnTop" />
+    <Navbar :isScrolled="isScrolled" />
     <main class="bg-gray-50 text-gray-700 dark:bg-gray-900 dark:text-gray-50">
       <router-view/>
     </main>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Contact from './views/Contact'
 import Navbar from './components/Navbar'
 
@@ -30,32 +30,36 @@ export default {
   },
   data () {
     return {
-      isOnTop: false
+      isScrolled: false
     }
   },
   computed: {
     ...mapGetters({ theme: 'getTheme' })
   },
   watch: {
-    theme (newTheme, oldTheme) {
-      newTheme === 'light'
-        ? document.querySelector('html').classList.remove('dark')
-        : document.querySelector('html').classList.add('dark')
+    theme (newTheme) {
+      this.setThemeClass(newTheme)
     }
   },
-  beforeMount () {
-    this.$store.dispatch('initTheme')
+  created () {
+    this.initTheme()
+    this.setThemeClass(this.getTheme)
   },
   mounted () {
-    console.log(this.theme)
     window.addEventListener('scroll', throttle(this.handleScroll, 100))
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
+    ...mapActions(['initTheme']),
     handleScroll (ev) {
-      this.isOnTop = (window.scrollY || window.scrollTop) > 80
+      this.isScrolled = (window.scrollY || window.scrollTop) > 80
+    },
+    setThemeClass (theme) {
+      theme === 'light'
+        ? document.querySelector('html').classList.remove('dark')
+        : document.querySelector('html').classList.add('dark')
     }
   }
 }
@@ -63,7 +67,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

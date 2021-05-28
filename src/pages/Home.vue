@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Hero from '../views/Hero'
 import Introduction from '../views/Introduction'
 import Services from '../views/Services'
@@ -21,6 +22,15 @@ export default {
     Introduction,
     Services,
     References
+  },
+  mounted () {
+    this.setNavbarToggle(true)
+  },
+  methods: {
+    ...mapActions(['setNavbarToggle'])
+  },
+  beforeDestroy () {
+    this.setNavbarToggle(false)
   }
 }
 </script>

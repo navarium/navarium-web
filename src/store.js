@@ -1,16 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     isMenuOpen: false,
-    theme: {}
+    theme: 'dark',
+    references: [],
+    services: [],
+    canNavbarToggle: false
   },
   getters: {
     isMenuOpen: state => state.isMenuOpen,
-    getTheme: state => state.theme
+    getTheme: state => state.theme,
+    getReferences: state => state.references,
+    getServices: state => state.services,
+    getNavbarToggle: state => state.canNavbarToggle
   },
   mutations: {
     SET_MENU_STATUS (state, status) {
@@ -19,6 +28,15 @@ export default new Vuex.Store({
     SET_THEME (state, theme) {
       state.theme = theme
       localStorage.theme = theme
+    },
+    SET_REFERENCES (state, references) {
+      state.references = references
+    },
+    SET_SERVICES (state, services) {
+      state.services = services
+    },
+    SET_NAVBARTOGGLE (state, inverse) {
+      state.canNavbarToggle = inverse
     }
   },
   actions: {
@@ -27,7 +45,6 @@ export default new Vuex.Store({
     },
     initTheme ({ commit }) {
       const cachedTheme = localStorage.theme ? localStorage.theme : false
-      //  `true` if the user has set theme to `dark` on browser/OS
       const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
       if (cachedTheme) {
@@ -47,6 +64,33 @@ export default new Vuex.Store({
           commit('SET_THEME', 'light')
           break
       }
+    },
+    initReferences ({ commit }) {
+      return axios.get(`${apiUrl}/references`)
+        .then(({ data }) => {
+          commit('SET_REFERENCES', data)
+          return data
+        })
+    },
+    getReferenceById ({ commit }, id) {
+      return axios.get(`${apiUrl}/references/${id}`)
+        .then(({ data }) => {
+          commit('SET_REFERENCES', data)
+          return data
+        })
+    },
+    showReference ({ commit, state }, id) {
+      return state.references.find(ref => ref.id === Number.parseInt(id, 10))
+    },
+    initServices ({ commit }) {
+      return axios.get(`${apiUrl}/services`)
+        .then(({ data }) => {
+          commit('SET_SERVICES', data)
+          return data
+        })
+    },
+    setNavbarToggle ({ commit }, state) {
+      commit('SET_NAVBARTOGGLE', state)
     }
   }
 })
