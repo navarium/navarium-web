@@ -1,17 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './pages/Home.vue'
+import Reference from './pages/Reference.vue'
+import Contact from './pages/Contact.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   base: process.env.BASE_URL,
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
+    },
+    {
+      path: '/reference/:id',
+      name: 'reference',
+      component: Reference
     }
   ]
 })

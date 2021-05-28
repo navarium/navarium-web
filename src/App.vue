@@ -1,23 +1,15 @@
 <template>
   <div id="app">
     <Navbar :inverse="isOnTop" />
-    <main>
-      <Hero class="w-full h-screen" />
-      <Introduction />
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <Services />
-        <References />
-      </div>
+    <main class="bg-gray-50 text-gray-700 dark:bg-gray-900 dark:text-gray-50">
+      <router-view/>
     </main>
     <Contact />
   </div>
 </template>
 
 <script>
-import Hero from './views/Hero'
-import Introduction from './views/Introduction'
-import Services from './views/Services'
-import References from './views/References'
+import { mapGetters } from 'vuex'
 import Contact from './views/Contact'
 import Navbar from './components/Navbar'
 
@@ -33,10 +25,6 @@ const throttle = (fn, delay) => {
 
 export default {
   components: {
-    Hero,
-    Introduction,
-    Services,
-    References,
     Contact,
     Navbar
   },
@@ -45,7 +33,21 @@ export default {
       isOnTop: false
     }
   },
+  computed: {
+    ...mapGetters({ theme: 'getTheme' })
+  },
+  watch: {
+    theme (newTheme, oldTheme) {
+      newTheme === 'light'
+        ? document.querySelector('html').classList.remove('dark')
+        : document.querySelector('html').classList.add('dark')
+    }
+  },
+  beforeMount () {
+    this.$store.dispatch('initTheme')
+  },
   mounted () {
+    console.log(this.theme)
     window.addEventListener('scroll', throttle(this.handleScroll, 100))
   },
   destroyed () {

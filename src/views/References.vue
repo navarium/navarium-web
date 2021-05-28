@@ -7,14 +7,17 @@
     <div v-else>
       <carousel :perPage="1" :perPageCustom="[[768, 2], [1024, 3]]">
         <slide v-for="reference in references" :key="reference.id" >
-          <article class="text-left">
-            <img :src="apiUrl + reference.images[0].url" alt="Reference cover photo">
+          <article class="text-left" @click="openModal(reference)">
+            <img :src="reference.images[0].url" alt="Reference cover photo">
             <h1>{{ reference[`title_${$i18n.locale}`] }}</h1>
             <div v-html="renderDescription(reference[`description_${$i18n.locale}`])"></div>
           </article>
         </slide>
       </carousel>
     </div>
+    <modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header">{{ modalContent[`title_${$i18n.locale}`] }}</h3>
+    </modal>
   </section>
 </template>
 
@@ -22,24 +25,27 @@
 import axios from 'axios'
 import marked from 'marked'
 import { Carousel, Slide } from 'vue-carousel'
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium-api.herokuapp.com' : 'http://localhost:1337'
+import Modal from '../components/Modal'
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
 
 export default {
   name: 'references',
   components: {
     Carousel,
-    Slide
+    Slide,
+    Modal
   },
   data () {
     return {
-      apiUrl,
       references: [],
       allCategories: [],
       fields: {
         name: '',
         categories: []
       },
-      error: null
+      error: null,
+      showModal: false,
+      modalContent: null
     }
   },
   async mounted () {
@@ -53,6 +59,11 @@ export default {
   methods: {
     renderDescription (description) {
       return description ? marked(description) : ''
+    },
+    openModal (reference) {
+      console.log(reference)
+      this.showModal = true
+      this.modalContent = reference
     }
   }
 }

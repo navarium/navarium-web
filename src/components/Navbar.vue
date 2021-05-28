@@ -1,23 +1,23 @@
 <template>
-  <nav class="z-50 fixed w-full" :class="[ inverse ? 'bg-white': 'bg-transparent', { 'shadow-lg': inverse } ]">
+  <nav class="z-50 fixed w-full" :class="[ inverse ? 'bg-white dark:bg-primary': 'bg-transparent', { 'shadow-lg': inverse } ]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <a href="#hero">
-              <img v-if="inverse" class="h-8 w-8" src="@/assets/images/logo.png" alt="Navarium Logo">
-              <img v-else class="h-8 w-8" src="@/assets/images/logo-white.png" alt="Navarium Logo">
+            <a href="#hero" class="h-8 w-8" :class="[inverse ? 'text-blue dark:text-white' : 'text-white']">
+              <img svg-inline src="@/assets/images/navarium.svg" class="h-8 w-8" alt="Navarium Logo">
             </a>
           </div>
           <div class="hidden md:block">
             <scrollactive class="ml-10 flex items-baseline space-x-4" :offset="88">
-              <a href="#services" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-primary' : 'text-white']">{{$t('menu.services')}}</a>
-              <a href="#references" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-primary' : 'text-white']">{{$t('menu.references')}}</a>
-              <a href="#contact" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-primary' : 'text-white']">{{$t('menu.contact')}}</a>
+              <a href="#services" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.services')}}</a>
+              <a href="#references" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.references')}}</a>
+              <a href="#contact" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[inverse ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.contact')}}</a>
             </scrollactive>
           </div>
         </div>
-        <LocaleDropdown class="ml-auto"/>
+        <ThemeToggler class="ml-auto mr-6 p-4" :class="[inverse ? 'text-blue dark:text-blue-50' : 'text-white']" />
+        <LocaleDropdown/>
         <div class="-mr-2 flex md:hidden">
           <button @click="toggleMenu"
             type="button"
@@ -52,11 +52,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import LocaleDropdown from './LocaleDropdown'
+import ThemeToggler from './ThemeToggler'
 
 export default {
   name: 'hero',
   components: {
-    LocaleDropdown
+    LocaleDropdown,
+    ThemeToggler
   },
   props: {
     inverse: {
@@ -74,5 +76,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

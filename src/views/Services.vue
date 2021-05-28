@@ -16,7 +16,7 @@
 <script>
 import axios from 'axios'
 import marked from 'marked'
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium-api.herokuapp.com' : 'http://localhost:1337'
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
 
 export default {
   name: 'services',
@@ -33,7 +33,7 @@ export default {
   },
   async mounted () {
     try {
-      const services = await axios.get(`${apiUrl}/references`)
+      const services = await axios.get(`${apiUrl}/services`)
       this.services = services.data
     } catch (error) {
       this.error = error
