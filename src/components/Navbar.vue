@@ -1,12 +1,12 @@
 <template>
-  <nav class="z-50 fixed w-full" :class="[ solid ? 'bg-white dark:bg-primary': 'bg-transparent', { 'shadow-lg': solid } ]">
+  <nav class="z-50 fixed w-screen" :class="[ solid ? 'bg-white dark:bg-primary': 'bg-transparent', { 'shadow-lg': solid } ]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <a href="#hero" class="h-8 w-8" :class="[solid ? 'text-blue dark:text-white' : 'text-white']">
+            <button class="h-8 w-8" :class="[solid ? 'text-blue dark:text-white' : 'text-white']" @click="logoClick">
               <img svg-inline src="@/assets/images/navarium.svg" class="h-8 w-8" alt="Navarium Logo">
-            </a>
+            </button>
           </div>
           <div class="hidden md:block">
             <scrollactive class="ml-10 flex items-baseline space-x-4" :offset="88">
@@ -16,7 +16,7 @@
             </scrollactive>
           </div>
         </div>
-        <ThemeToggler class="ml-auto mr-6 p-4" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']" />
+        <ThemeToggler class="ml-auto p-4" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']" />
         <LocaleDropdown/>
         <div class="-mr-2 flex md:hidden">
           <button @click="toggleMenu"
@@ -73,7 +73,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['toggleMenu'])
+    ...mapActions(['toggleMenu']),
+    logoClick () {
+      console.log(this.$route, this.$router)
+      window.history.length ? this.$router.go(-1) : this.$router.push('/')
+    }
   }
 }
 </script>

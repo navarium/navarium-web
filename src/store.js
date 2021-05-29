@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
+const apiUrl = process.env.VUE_APP_API_URL
 
 Vue.use(Vuex)
 

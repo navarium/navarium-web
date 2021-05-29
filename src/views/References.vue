@@ -1,22 +1,22 @@
 <template>
-  <section id="references" class="mb-96 z-10">
-    <h1 class="h1 text-2xl">{{$t('section.references.title')}}</h1>
+  <section id="references" class="py-10">
+    <h1 class="h1 text-4xl font-medium mb-8">{{$t('section.references.title')}}</h1>
     <div v-if="error">
       {{ error }}
     </div>
     <div v-else>
-      <carousel :perPage="1" :perPageCustom="[[768, 2], [1024, 3]]">
+      <Carousel :perPage="1" :perPageCustom="[[768, 2], [1024, 3]]">
         <slide v-for="reference in references" :key="reference.id" >
           <router-link :to="{ name: 'reference', params: { id: reference.id } }">
             <div class="my-1 px-1 w-full">
               <article class="overflow-hidden rounded-lg shadow-lg">
-                  <img class="block h-auto w-full" :src="reference.images[0].url" alt="Reference cover photo">
+                  <img class="block h-auto w-full" :src="apiUrl + reference.images[0].url" alt="Reference cover photo">
                   <header class="flex items-center justify-between leading-tight p-2 md:p-4">
                     <h1 class="text-lg">
                       {{ reference[`title_${$i18n.locale}`] }}
                     </h1>
                     <p class="text-grey-darker text-sm">
-                      14/4/19
+                      {{ Intl.DateTimeFormat($i18n.locale).format(new Date(reference.published_at)) }}
                     </p>
                   </header>
                   <footer class="flex items-center justify-between leading-none p-2 md:p-4">
@@ -26,7 +26,7 @@
             </div>
           </router-link>
         </slide>
-      </carousel>
+      </Carousel>
     </div>
   </section>
 </template>
@@ -35,6 +35,8 @@
 import { mapActions } from 'vuex'
 import marked from 'marked'
 import { Carousel, Slide } from 'vue-carousel'
+
+const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
 
 export default {
   name: 'references',
@@ -52,7 +54,8 @@ export default {
       },
       error: null,
       showModal: false,
-      modalContent: null
+      modalContent: null,
+      apiUrl
     }
   },
   async created () {
@@ -70,3 +73,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.VueCarousel-wrapper {
+  margin: 0;
+}
+
+.VueCarousel-slide {
+  padding: 1rem;
+}
+
+.VueCarousel-dot,
+.VueCarousel-dot:focus {
+  outline: none !important;
+}
+</style>

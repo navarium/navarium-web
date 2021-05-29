@@ -4,7 +4,7 @@
     <main class="bg-gray-50 text-gray-700 dark:bg-gray-900 dark:text-gray-50">
       <router-view/>
     </main>
-    <Contact />
+    <Contact class="relative z-10" />
   </div>
 </template>
 

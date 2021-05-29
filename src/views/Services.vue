@@ -1,14 +1,16 @@
 <template>
-  <section id="services" class="mb-96 z-10">
-    <h1 class="h1 text-2xl">{{$t('section.services.title')}}</h1>
+  <section id="services" class="py-10">
+    <h1 class="h1 text-4xl font-medium mb-8">{{$t('section.services.title')}}</h1>
     <div v-if="error">
       {{ error }}
     </div>
-    <div v-else>
-      <article v-for="service in services" :key="service.id" class="text-left">
-        <h1>{{ service[`title_${$i18n.locale}`] }}</h1>
-        <div v-html="renderDescription(service[`description_${$i18n.locale}`])"></div>
-      </article>
+    <div v-else class="grid grid-cols-6 gap-4">
+      <div class="col-start-2 col-span-4">
+        <article v-for="service in services" :key="service.id" class="text-left mb-5">
+          <h1 class="text-xl text-center mb-8">{{ service[`title_${$i18n.locale}`] }}</h1>
+          <div class="marked" v-html="renderDescription(service[`description_${$i18n.locale}`])"></div>
+        </article>
+      </div>
     </div>
   </section>
 </template>
@@ -47,11 +49,4 @@ export default {
 </script>
 
 <style lang="scss">
-.VueCarousel-wrapper {
-  margin: 0 -1rem;
-}
-
-.VueCarousel-slide {
-  padding: 1rem;
-}
 </style>
