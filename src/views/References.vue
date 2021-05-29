@@ -36,7 +36,7 @@ import { mapActions } from 'vuex'
 import marked from 'marked'
 import { Carousel, Slide } from 'vue-carousel'
 
-const apiUrl = process.env.NODE_ENV === 'production' ? 'https://navarium.herokuapp.com' : 'http://localhost:1337'
+const apiUrl = process.env.VUE_APP_IMAGE_PATH_PREFIX
 
 export default {
   name: 'references',
