@@ -1,4 +1,8 @@
-# vue-app
+# Navarium WEB - Vue
+
+## Install `local` environment
+- Install [Git](https://git-scm.com/downloads)
+- Install [NodeJS](https://nodejs.org/en/download/)
 
 ## Project setup
 ```
@@ -10,12 +14,12 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Save updates to Git repository
+- `git commit -am 'Commit message'` - Add all changes and commit
+- `git push origin main` - Push changes to Git repository
 
-### Lints and fixes files
-```
-npm run lint
-```
+### Deploy changes to Github Pages
+Run `deploy.sh'` script - Not necessary if you dont have uncommitted changes
+
+`git push heroku main` - Push changes to Heroku
+Heroku builds the new API and deploy
