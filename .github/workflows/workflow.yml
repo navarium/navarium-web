@@ -21,4 +21,4 @@ jobs:
         with:
           branch: main
           folder: dist
-          repository-name: navarium/navarium.github.io
+          target-folder: docs
