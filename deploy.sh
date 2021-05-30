@@ -12,6 +12,8 @@ cd dist
 # if you are deploying to a custom domain
 echo 'navarium.com' > CNAME
 
+cp index.html 404.html
+
 git init -b main
 git add -A
 git commit -m 'deploy'
