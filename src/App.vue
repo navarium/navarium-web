@@ -46,7 +46,7 @@ export default {
     this.setThemeClass(this.getTheme)
   },
   mounted () {
-    window.addEventListener('scroll', throttle(this.handleScroll, 100))
+    window.addEventListener('scroll', throttle(this.handleScroll, 100), { passive: true })
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
