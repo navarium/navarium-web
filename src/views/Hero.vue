@@ -1,8 +1,8 @@
 <template>
   <section id="hero" class="relative bg-fixed h-screen w-screen flex items-center justify-center">
     <div class="hero-content relative z-30 h-full w-full flex items-center justify-center">
-      <h1 class="title z-0 text-4xl font-bold md:text-6xl lg:text-8xl text-white m-auto">
-        NAVARIUM
+      <h1 class="title z-0 text-4xl font-bold md:text-5xl lg:text-8xl text-white m-auto">
+        N A V A R I U M
       </h1>
       <div class="scroll absolute bottom-5 animate-bounce">
         <img src="@/assets/images/scroll.svg" alt="" class="h-12">
@@ -53,6 +53,6 @@ export default {
 }
 
 .title {
-  text-shadow: -6px 6px 0 #000;
+  text-shadow: -4px 4px 0 #000;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="z-50 fixed w-screen" :class="[ solid ? 'bg-white dark:bg-primary': 'bg-transparent', { 'shadow-lg': solid } ]">
+  <nav class="z-50 fixed w-screen" :class="[`bg-white dark:bg-primary dark:bg-opacity-${scrollval}`, { 'shadow-lg': solid } ]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
@@ -64,7 +64,13 @@ export default {
     isScrolled: {
       type: Boolean,
       default: false
+    },
+
+    scrollval: {
+      type: Number,
+      default: 0
     }
+
   },
   computed: {
     ...mapGetters(['isMenuOpen', 'getNavbarToggle']),

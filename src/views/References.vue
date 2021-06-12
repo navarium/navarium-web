@@ -15,11 +15,8 @@
                     <h1 class="text-lg">
                       {{ reference[`title_${$i18n.locale}`] }}
                     </h1>
-                    <p class="text-grey-darker text-sm">
-                      {{ Intl.DateTimeFormat($i18n.locale).format(new Date(reference.published_at)) }}
-                    </p>
                   </header>
-                  <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+                  <footer class="text-left leading-none p-2 md:p-4">
                     <div v-html="renderDescription(reference[`description_${$i18n.locale}`])"></div>
                   </footer>
               </article>

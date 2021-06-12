@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar :isScrolled="isScrolled" />
+    <Navbar :isScrolled="isScrolled" :scrollval="scrollval"/>
     <main class="bg-gray-50 text-gray-700 dark:bg-gray-900 dark:text-gray-50">
       <router-view/>
     </main>
@@ -30,7 +30,8 @@ export default {
   },
   data () {
     return {
-      isScrolled: false
+      isScrolled: false,
+      scrollval: 0
     }
   },
   computed: {
@@ -55,6 +56,8 @@ export default {
     ...mapActions(['initTheme']),
     handleScroll (ev) {
       this.isScrolled = (window.scrollY || window.scrollTop) > 80
+      this.scrollval = 10 * Math.round(window.scrollY / 20)
+      if (this.scrollval >= 100) { this.scrollval = 100 }
     },
     setThemeClass (theme) {
       theme === 'light'
