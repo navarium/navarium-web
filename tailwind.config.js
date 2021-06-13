@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#000042'
+          DEFAULT: '#00002a'
         }
       },
       inset: {
