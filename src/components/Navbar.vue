@@ -9,17 +9,15 @@
             </button>
           </div>
           <div class="hidden md:block">
-            <scrollactive class="ml-10 flex items-baseline space-x-4" :offset="88">
-              <a href="#services" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.services')}}</a>
-              <a href="#references" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.references')}}</a>
-              <a href="#contact" class="scrollactive-item hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.contact')}}</a>
-            </scrollactive>
+            <router-link :to="{ name: 'home', hash: '#services'}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.services')}}</router-link>
+            <router-link :to="{ name: 'references' }" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.references')}}</router-link>
+            <router-link :to="{ name: 'home', hash: '#contact'}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.contact')}}</router-link>
           </div>
         </div>
         <ThemeToggler class="ml-auto p-4" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']" />
         <LocaleDropdown/>
         <div class="-mr-2 flex md:hidden">
-          <button @click="toggleMenu"
+          <button @click="() => toggleMenu(!isMenuOpen)"
             type="button"
             class="ml-2 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
             :class="[solid ? 'text-primary' : 'text-white']"
@@ -40,11 +38,11 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div id="mobile-menu" class="bg-white md:hidden">
-      <scrollactive v-if="isMenuOpen" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a href="#services" @click="toggleMenu(false)" class="text-primary scrollactive-item hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.services')}}</a>
-        <a href="#references" @click="toggleMenu(false)" class="text-primary scrollactive-item hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.references')}}</a>
-        <a href="#contact" @click="toggleMenu(false)" class="text-primary scrollactive-item hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.contact')}}</a>
-      </scrollactive>
+      <div v-if="isMenuOpen" class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <router-link :to="{ name: 'home', hash: '#services'}" class="text-primary hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.services')}}</router-link>
+        <router-link :to="{ name: 'references' }" class="text-primary hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.references')}}</router-link>
+        <router-link :to="{ name: 'home', hash: '#contact'}" class="text-primary hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{{$t('menu.contact')}}</router-link>
+      </div>
     </div>
   </nav>
 </template>
@@ -81,8 +79,10 @@ export default {
   methods: {
     ...mapActions(['toggleMenu']),
     logoClick () {
-      console.log(this.$route, this.$router)
-      window.history.length ? this.$router.go(-1) : this.$router.push('/')
+      console.log(this.$route.path)
+      if (this.$route.path !== '/') {
+        this.$router.push('/')
+      }
     }
   }
 }

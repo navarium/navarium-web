@@ -24,7 +24,6 @@ export default {
   },
   created () {
     this.isMobile = this.mobileCheck()
-    console.log(this.isMobile)
   },
   methods: {
     mobileCheck () {

@@ -28,6 +28,12 @@ Vue.use(VueGtm, {
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (to === from) return
+  store.dispatch('toggleMenu', false)
+  next()
+})
+
 new Vue({
   router,
   i18n,

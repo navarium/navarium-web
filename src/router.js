@@ -31,5 +31,15 @@ export default new Router({
       name: 'references',
       component: References
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash,
+        behavior: 'smooth',
+        offset: { x: 0, y: 50 }
+      }
+    }
+    return { x: 0, y: 0 }
+  }
 })
