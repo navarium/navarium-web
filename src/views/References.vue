@@ -84,4 +84,5 @@ export default {
 .VueCarousel-dot:focus {
   outline: none !important;
 }
+
 </style>
