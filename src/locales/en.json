@@ -26,7 +26,8 @@
     },
     "references": {
       "title": "References",
-      "404": "Didnt find these reference."
+      "404": "Didnt find these reference.",
+      "all": "All references"
     }
   }
 }

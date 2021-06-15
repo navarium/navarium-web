@@ -26,7 +26,8 @@
     },
     "references": {
       "title": "Referenciák",
-      "404": "Nem található ez a referencia"
+      "404": "Nem található ez a referencia",
+      "all": "Ősszes referencia"
     }
   }
 }
