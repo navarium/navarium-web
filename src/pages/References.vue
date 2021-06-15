@@ -10,8 +10,8 @@
     </div>
     <div v-else class="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
       <router-link v-for="reference in references" :key="reference.id" :to="{ name: 'reference', params: { id: reference.id } }">
-        <div class="my-1 px-1 w-full">
-          <article class="overflow-hidden rounded-lg shadow-lg">
+        <div class="my-1 px-1 w-full h-full">
+          <article class="h-full overflow-hidden rounded-lg shadow-lg">
               <div class="h-56 bg-cover bg-center block w-full" :style="{'background-image': `url(${apiUrl + reference.images[0].url})`}" alt="Reference cover photo"></div>
               <header class="flex items-center justify-between leading-tight p-2 md:p-4">
                 <h1 class="text-lg">

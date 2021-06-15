@@ -1,13 +1,11 @@
 <template>
-  <nav class="z-50 fixed w-screen" :class="[`bg-white dark:bg-primary dark:bg-opacity-${scrollval}`, { 'shadow-lg': solid } ]">
+  <nav class="z-50 fixed w-screen" :class="[`bg-white dark:bg-primary dark:bg-opacity-${scrollval}`, { 'shadow-lg': solid }, solid ? '' : `bg-opacity-${scrollval}` ]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <button class="h-8 w-8" :class="[solid ? 'text-blue dark:text-white' : 'text-white']" @click="logoClick">
-              <img svg-inline src="@/assets/images/navarium.svg" class="h-8 w-8" alt="Navarium Logo">
-            </button>
-          </div>
+          <button class="h-8 w-8 mr-8" :class="[solid ? 'text-blue dark:text-white' : 'text-white']" @click="logoClick">
+            <img svg-inline src="@/assets/images/navarium.svg" class="h-8 w-8" alt="Navarium Logo">
+          </button>
           <div class="hidden md:block">
             <router-link :to="{ name: 'home', hash: '#services'}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.services')}}</router-link>
             <router-link :to="{ name: 'references' }" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" :class="[solid ? 'text-blue dark:text-blue-50' : 'text-white']">{{$t('menu.references')}}</router-link>
@@ -79,7 +77,6 @@ export default {
   methods: {
     ...mapActions(['toggleMenu']),
     logoClick () {
-      console.log(this.$route.path)
       if (this.$route.path !== '/') {
         this.$router.push('/')
       }

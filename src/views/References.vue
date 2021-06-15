@@ -8,9 +8,9 @@
       <Carousel :perPage="1" :perPageCustom="[[768, 2], [1024, 3]]">
         <slide v-for="reference in references" :key="reference.id" >
           <router-link :to="{ name: 'reference', params: { id: reference.id } }">
-            <div class="my-1 px-1 w-full">
-              <article class="overflow-hidden rounded-lg shadow-lg">
-                  <img class="block h-auto w-full" :src="apiUrl + reference.images[0].url" alt="Reference cover photo">
+            <div class="my-1 px-1 w-full h-full">
+              <article class="h-full overflow-hidden rounded-lg shadow-lg">
+                  <div class="h-56 bg-cover bg-center block w-full" :style="{'background-image': `url(${apiUrl + reference.images[0].url})`}" alt="Reference cover photo"></div>
                   <header class="flex items-center justify-between leading-tight p-2 md:p-4">
                     <h1 class="text-lg">
                       {{ reference[`title_${$i18n.locale}`] }}
@@ -24,6 +24,7 @@
           </router-link>
         </slide>
       </Carousel>
+      <router-link class="block mt-16" :to="{ name: 'references' }">{{$t('section.references.all')}}</router-link>
     </div>
   </section>
 </template>
