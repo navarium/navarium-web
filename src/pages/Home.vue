@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero class="w-screen h-screen" />
-    <div class="relative z-10 w-screen bg-white dark:bg-gray-900">
+    <div class="relative z-10 w-screen bg-white dark:bg-primary">
       <Introduction />
       <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <Services />
